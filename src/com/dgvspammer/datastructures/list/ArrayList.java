@@ -52,11 +52,15 @@ public class ArrayList<E> implements List<E>{
         for (int i = 0; i < length; i++) {
             java.lang.reflect.Array.set(dest, destPos + i, java.lang.reflect.Array.get(src, srcPos + i));
         }
-    };
+    }
 
     @Override
+    @SuppressWarnings("unchecked")
     public E get(int index) {
-        return null;
+        if (index < 0 || index >= this.size) {
+            throw new ArrayIndexOutOfBoundsException("Index: " + index + ", Size: " + this.size);
+        }
+        return (E)this.elements[index];
     }
 
     @Override
@@ -66,16 +70,23 @@ public class ArrayList<E> implements List<E>{
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.size == 0;
     }
 
     @Override
     public boolean contains(E e) {
+        for (int i = 0; i < this.size; i++) {
+            if (this.elements[i].equals(e))
+                return true;
+        }
         return false;
     }
 
     @Override
     public void clear() {
-
+        for (int i = 0; i < this.size; i++) {
+            this.elements[i] = null;
+        }
+        size = 0;
     }
 }
